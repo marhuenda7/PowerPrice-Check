@@ -1,0 +1,154 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow: auto;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+}
+
+body {
+  background-color: rgb(253, 248, 227);
+}
+
+header {
+  position: static;
+  text-align: center;
+  background-color: rgba(11, 125, 218, 0.318);
+  padding: 20px;
+  margin: 0 0 1vh 0;
+  box-shadow: 0 5px 5px 0 rgba(40, 125, 194, 0.315);
+}
+
+h1 {
+  color: #ffffff;
+  text-shadow: 2px 2px 1px rgb(58, 0, 233);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+h2 {
+  text-align: center;
+}
+
+h3 {
+  text-align: center;
+}
+
+p#intro {
+  padding: 3%;
+  text-align: center;
+  font-weight: bold;
+  font-size: 2rem;
+}
+
+#precios {
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+  justify-content: end;
+  justify-content: space-around;
+}
+
+.card {
+  font-size: 0.95rem;
+  background-color: #ffffff;
+  box-shadow: 0 2px 6px rgba(40, 125, 194, 0.318);
+  min-height: 5rem;
+  border-radius: 1rem;
+  padding: 0.75rem;
+  margin: 2%;
+}
+
+.numero {
+  font-weight: bold;
+  text-align: center;
+  margin: 3rem 0 2rem 0;
+}
+#listaEjemplos{
+
+margin: auto;
+
+}
+
+img{
+
+  overflow: auto;
+  width: 95%;
+
+}
+ul {
+  display: flex;
+  justify-content: center;
+  justify-content: end;
+  justify-content: space-around;
+}
+
+li {
+  text-align: center;
+  list-style: none;
+  padding: 3rem;
+  min-height: 15rem;
+  min-width: 20rem;
+}
+
+button{
+
+border-style: none;
+box-shadow: 0px 0px 25px 0px rgba(40, 125, 194, 0.318);
+
+}
+
+footer {
+  background-color: rgba(97, 163, 217, 0.318);
+  box-shadow: 0px 0px 25px 0px rgba(40, 125, 194, 0.318);
+  width: 100%;
+  margin-top: 1rem;
+  margin-bottom: 0;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+@media screen and (min-width: 800px) {
+  #contenedor {
+    background-color: whitesmoke;
+    width: 99%;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 5rem 2rem 1fr 1fr 1fr 1rem;
+    grid-template-areas:
+      "header header"
+      "intro intro"
+      "content content"
+      "grafica grafica"
+      "ejemplo ejemplo"
+      "footer footer";
+  }
+
+  header {
+    grid-area: header;
+  }
+  p.intro {
+    grid-area: intro;
+  }
+  section#precios {
+    grid-area: content;
+  }
+
+  article.card {
+    min-width: 30%;
+    margin: auto;
+  }
+
+  #graficaPrecios {
+    grid-area: grafica;
+  }
+
+  #listaEjemplos {
+    grid-area: ejemplo;
+  }
+
+  footer {
+    grid-area: footer;
+  }
+}
