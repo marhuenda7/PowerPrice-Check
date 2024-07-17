@@ -18,6 +18,12 @@ header {
   margin: 0 0 1vh 0;
   box-shadow: 0 5px 5px 0 rgba(40, 125, 194, 0.315);
 }
+h1 > img {
+
+  width: 2rem;
+  height: 2rem;
+
+}
 
 h1 {
   color: #ffffff;
@@ -31,6 +37,12 @@ h2 {
 
 h3 {
   text-align: center;
+}
+
+hr {
+  border-top: rgb(3, 39, 70);
+  width: 30%;
+  margin: auto;
 }
 
 p#intro {
@@ -63,17 +75,14 @@ p#intro {
   text-align: center;
   margin: 3rem 0 2rem 0;
 }
-#listaEjemplos{
-
-margin: auto;
-
+#listaEjemplos {
+  margin: auto;
 }
 
-img{
-
+img {
   overflow: auto;
-  width: 95%;
-
+  width: 200px;
+  height: 200px;
 }
 ul {
   display: flex;
@@ -90,11 +99,16 @@ li {
   min-width: 20rem;
 }
 
-button{
+button {
+  border-style: none;
+  border-radius: 10%;
+  margin-bottom: 1rem;
+}
 
-border-style: none;
-box-shadow: 0px 0px 25px 0px rgba(40, 125, 194, 0.318);
-
+button:hover {
+  border-style: none;
+  box-shadow: 0px 0px 10px 10px rgba(40, 125, 194, 0.318);
+  cursor: pointer;
 }
 
 footer {
@@ -106,6 +120,7 @@ footer {
   padding: 1rem;
   display: flex;
   justify-content: space-between;
+  font-size: .7rem;
 }
 
 @media screen and (min-width: 800px) {

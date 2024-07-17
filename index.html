@@ -5,32 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PowerPrice-Check</title>
     <link rel="stylesheet" href="./css/style.css" />
-    <link rel="icon" type="image/x-icon" href="./img/logo.jpg">
-    <link rel="script" href="./js/script.js">
+    <link rel="icon" type="image/x-icon" href="./img/logo.png" />
+    <link rel="script" href="./js/script.js" />
   </head>
   <body class="contenedor">
     <header>
-      <h1>PowerPrice-check</h1><img src="./img/logo.jpg" alt="símbolo del dolar con un rayo">
 
+      <h1>PowerPrice-check <img src="./img/logo.png" alt="logo"></h1>
+    
     </header>
 
-    <p id="intro">Consulta el precio de la luz hoy!
-      <br>
+    <p id="intro">
+      Consulta el precio de la luz hoy!
+      <br />
       <script>
-      let mydate=new Date();
-      let year=mydate.getYear();
-      if (year < 1000)
-      year+=1900;
-      let day=mydate.getDay();
-      let month=mydate.getMonth()+1;
-      if (month<10)
-      month="0"+month;
-      let daym=mydate.getDate();
-      if (daym<10)
-      daym="0"+daym;
-      document.write("<small><font color='000000' face='Arial'><b>"+daym+"/"+month+"/"+year+"</b></font></small>")
+        let mydate = new Date();
+        let year = mydate.getYear();
+        if (year < 1000) year += 1900;
+        let day = mydate.getDay();
+        let month = mydate.getMonth() + 1;
+        if (month < 10) month = "0" + month;
+        let daym = mydate.getDate();
+        if (daym < 10) daym = "0" + daym;
+        document.write(
+          "<small><font color='000000' face='Arial'><b>" +
+            daym +
+            "/" +
+            month +
+            "/" +
+            year +
+            "</b></font></small>"
+        );
       </script>
-      </p>
+    </p>
 
     <section id="precios">
       <article class="card">
@@ -53,7 +60,10 @@
     </section>
 
     <section id="graficaPrecios" class="card">
-      <h2>grafica/tabla precios <hr></h2>
+      <h2>
+        Grafica/tabla precios
+        <hr />
+      </h2>
 
       <article id="grafica">
         pon aqui la grafica de precios
@@ -107,20 +117,52 @@
 
     <section id="listaEjemplos" class="card">
       <h2>Consulta tu consumo clickando en los siguientes electrodomesticos</h2>
-      <br>
+      <hr>
+      <br />
       <ul>
-        <li> Lavadora <button id="lavadora"><img src="/1637846620838.jpg" alt=""></button> Consumo por hora medio: lePresio </li>
-        <li> Calefaccion <button id="calefaccion"><img src="/1637846620838.jpg" alt=""></button> Consumo por hora medio: lePresio</li>
-        <li> Ordenador <button id="ordenador"><img src="/1637846620838.jpg" alt=""></button> Consumo por hora medio: lePresio</li>
-        <li> Cocina electrica <button id="cocina"><img src="/1637846620838.jpg" alt=""></button> Consumo por hora medio: lePresio</li>
-        <li> Nevera <button id="nevera"><img src="/1637846620838.jpg" alt=""></button> Consumo por hora medio: lePresio</li>
+        <li>
+          <p>Lavadora</p>
+          <button id="lavadora">
+            <img src="./img/lavadora.jpg" alt="lavadora" class="ejemplos" />
+          </button>
+          <p>Consumo por hora medio: lePresio</p>
+        </li>
+        <li>
+          <p>Calefaccion</p>
+          <button id="calefaccion">
+            <img src="./img/radiador.jpg" alt="calefaccion" class="ejemplos" />
+          </button>
+          <p>Consumo por hora medio: lePresio</p>
+        </li>
+        <li>
+          <p>Ordenador</p>
+          <button id="ordenador">
+            <img src="./img/pc.jpg" alt="ordenador" class="ejemplos" />
+          </button>
+          <p>Consumo por hora medio: lePresio</p>
+        </li>
+        <li>
+          <p>Cocina electrica</p>
+          <button id="cocina">
+            <img src="./img/horno.jpg" alt="Horno" class="ejemplos" />
+          </button>
+          <p>Consumo por hora medio: lePresio</p>
+        </li>
+        <li>
+          <p>Nevera</p>
+          <button id="nevera">
+            <img src="./img/nevera.jpg" alt="Nevera" class="ejemplos" />
+          </button>
+          <p>Consumo por hora medio: lePresio</p>
+        </li>
       </ul>
     </section>
 
     <footer>
       <p>
-        Web producida por Grupo D™: <br> Lara Rodriguez Herrero, Carlos Marhuenda
-        Bru, Pedro Hervás y Alex Riera Hernandez.
+        Web producida por Grupo D™: <br />
+        Lara Rodriguez Herrero, Carlos Marhuenda Bru, Pedro Hervás y Alex Riera
+        Hernandez.
       </p>
       <p>© 2024 - Todos los derechos reservados</p>
     </footer>
