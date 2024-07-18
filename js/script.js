@@ -7,18 +7,19 @@ const electrodomesticos = {
 };
 
 // Función para obtener los datos de la API
-function obtenerDatosAPI() {
-  fetch("https://bypass-cors-beta.vercel.app/?url=https://api.preciodelaluz.org/v1/prices/all?zone=PCB")
-    .then(function (respuesta) {
-      return respuesta.json();
-    })
-    .then(function (datos) {
-      localStorage.setItem('datosPrecioLuz', JSON.stringify(datos));})
-      .catch(function (err) {
-        console.error(err.message);
-      });
+  async function obtenerDatosAPI() {
+    try {
+      const respuesta = await fetch(
+        "https://bypass-cors-beta.vercel.app/?url=https://api.preciodelaluz.org/v1/prices/all?zone=PCB"
+      );
+      const datos = await respuesta.json();
+      guardarDatosLocalStorage(datos);
+      console.log(datos);
+      return datos;
+    } catch (err) {
+      console.error(err.message);
+    }
   }
-obtenerDatosAPI()
 // Función para guardar los datos en el LocalStorage
 function guardarDatosLocalStorage(datos) {
   const fecha = new Date().toISOString().split('T')[0]; // obtenemos la fecha actual
@@ -38,17 +39,26 @@ function calcularCosto(electrodomesticos, precio) {
 
 // Función principal
 async function main() {
-  let datos;
-  const fechaDatos = localStorage.getItem('fechaDatos');
-  const fechaActual = new Date().toISOString().split('T')[0];
- 
-  // Comprobamos si ya hemos obtenido los datos hoy
-  if (fechaDatos === fechaActual) {
-    datos = JSON.stringify(localStorage.getItem('datosPrecioLuz'));
+  
+  let datos = JSON.parse(localStorage.getItem("datosPrecioLuz"))
+  if (!datos) {
+    datos = obtenerDatosAPI();
+    console.log('Sin datos');
   } else {
-    datos = await obtenerDatosAPI();
-    guardarDatosLocalStorage(datos);
+    const fechaActual = new Date().toISOString().split("T")[0];
+    const fechaDatos = localStorage.getItem("fechaDatos");
+    console.log(fechaActual, fechaDatos);
+    if (fechaDatos === fechaActual) {
+      datos = JSON.parse(localStorage.getItem("datosPrecioLuz"));
+      console.log('Mismo dia');
+    } else {
+      datos = obtenerDatosAPI();
+      console.log('Distinto dia');
+    }
   }
+
+
+  
   // Obtenemos el precio actual
   const horaActual = new Date().getHours();
   const precioActual = datos[horaActual].price;
