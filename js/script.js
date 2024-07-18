@@ -59,11 +59,13 @@ async function main() {
 
 
   
-  // Obtenemos el precio actual
-  const horaActual = new Date().getHours();
-  const precioActual = datos[horaActual].price;
-  console.log(horaActual)
-  console.log(precioActual)
+// Obtenemos el precio actual
+const horaActual = new Date().getHours();
+const horaActualStr = horaActual.toString().padStart(2, '0') + '-' + (horaActual + 1).toString().padStart(2, '0');
+const precioActual = datos.data[horaActualStr].price;
+  console.log(horaActualStr);
+  console.log(precioActual);
+
   // Calculamos los costos
   const costos = calcularCosto(electrodomesticos, precioActual);
 
