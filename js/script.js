@@ -50,10 +50,10 @@ async function main() {
     console.log(fechaActual, fechaDatos);
     if (fechaDatos === fechaActual) {
       datos = JSON.parse(localStorage.getItem("datosPrecioLuz"));
-      console.log('Mismo dia');
+      console.log('Mismo día');
     } else {
       datos = obtenerDatosAPI();
-      console.log('Distinto dia');
+      console.log('Distinto día');
     }
   }
 
