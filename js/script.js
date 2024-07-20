@@ -22,7 +22,7 @@ async function obtenerDatosAPI() {
     );
     const datos = await respuesta.json();
     guardarDatosLocalStorage(datos);
-    console.log(datos);
+    
     return datos;
   } catch (err) {
     console.error(err.message);
@@ -88,17 +88,17 @@ async function main() {
   let datos = JSON.parse(localStorage.getItem("datosPrecioLuz"));
   if (!datos) {
     datos = await obtenerDatosAPI();
-    console.log('Sin datos');
+    
   } else {
     const fechaActual = new Date().toISOString().split("T")[0];
     const fechaDatos = localStorage.getItem("fechaDatos");
-    console.log(fechaActual, fechaDatos);
+   
     if (fechaDatos === fechaActual) {
       datos = JSON.parse(localStorage.getItem("datosPrecioLuz"));
-      console.log('Mismo día');
+     
     } else {
       datos = obtenerDatosAPI();
-      console.log('Distinto día');
+     
     }
   }
   
@@ -106,8 +106,6 @@ async function main() {
   const horaActual = new Date().getHours();
   const horaActualStr = horaActual.toString().padStart(2, '0') + '-' + (horaActual + 1).toString().padStart(2, '0');
   const precioActual = datos.data[horaActualStr].price;
-  console.log(horaActualStr);
-  console.log(precioActual);
 
   // Calculamos los costos y ponemos en HTML
   const costos = calcularCosto(electrodomesticos, precioActual);
@@ -126,30 +124,26 @@ async function main() {
   //convertimos la cadena de texto en numeros con parseFloat para hacerlo accesible a los calculos del boton
   let numeroMediaPrecios = parseFloat(mediaPrecios);
 
-  document.getElementById("horaMenor").textContent = (`${horaMinima}`)
+  document.getElementById("horaMenor").textContent = (`${horaMinima}h`)
   document.getElementById("precioMenor").textContent = (`${precioMinimo} €/MWh`)
 
   document.getElementById("precioMedio").textContent = (`${mediaPrecios} €/MWh`)
 
-  document.getElementById("horaMayor").textContent = (`${horaMaxima}`)
+  document.getElementById("horaMayor").textContent = (`${horaMaxima}h`)
   document.getElementById("precioMayor").textContent = (`${precioMaximo} €/MWh`)
 
-  console.log(`El precio máximo de la luz es ${precioMaximo}€ a las ${horaMaxima}.`);
-  console.log(`El precio mínimo de la luz es ${precioMinimo}€ a las ${horaMinima}.`);
-  console.log(`La media de los precios de la luz es ${mediaPrecios}€.`);
-  
-
+ 
 }
 
 main();
 
 let electricItems = document.querySelectorAll("button");
 
-console.log(electricItems);
-console.log(JSON.parse(localStorage.getItem('electroStorage')))
+
 const activePrompt = Array.from(electricItems).forEach((item) => {
   item.addEventListener("click", () => {
     let ventana = parseInt(prompt(`Ingresa el consumo de tu ${[item.id]}`));
+    
     if (isNaN(ventana)) {
       alert(
         "Formato incorrecto. Por favor introduce solo la cantidad numérica"
@@ -159,7 +153,9 @@ const activePrompt = Array.from(electricItems).forEach((item) => {
       let electrodomesticos = JSON.parse(localStorage.getItem('electroStorage'));
       electrodomesticos[item.id] = ventana;
       localStorage.setItem('electroStorage', JSON.stringify(electrodomesticos));
-    } 
+      location.reload();
+      }
+      
   });
 });
 
