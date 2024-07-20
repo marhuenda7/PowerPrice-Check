@@ -130,7 +130,7 @@ async function main() {
 
   document.getElementById("precioMedio").textContent = (`${mediaPrecios} €/MWh`)
 
-  document.getElementById("horaMayor").textContent = (`${horaMaxima}.`)
+  document.getElementById("horaMayor").textContent = (`${horaMaxima}`)
   document.getElementById("precioMayor").textContent = (`${precioMaximo} €/MWh`)
 
   console.log(`El precio máximo de la luz es ${precioMaximo}€ a las ${horaMaxima}.`);
