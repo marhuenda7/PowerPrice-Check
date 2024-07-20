@@ -93,7 +93,7 @@ async function main() {
       datos = JSON.parse(localStorage.getItem("datosPrecioLuz"));
       console.log('Mismo día');
     } else {
-      datos = await obtenerDatosAPI();
+      datos = obtenerDatosAPI();
       console.log('Distinto día');
     }
   }
@@ -129,3 +129,27 @@ async function main() {
 }
 
 main();
+
+let electricItems = document.querySelectorAll("button");
+console.log(electricItems);
+
+const activePrompt = Array.from(electricItems).forEach((item) => {
+  item.addEventListener("click", () => {
+    let ventana = parseInt(prompt(`Ingresa el consumo de tu ${[item.id]}`));
+    if (isNaN(ventana)) {
+      alert(
+        "Formato incorrecto. Por favor introduce solo la cantidad numérica"
+      );
+    } else if (ventana !== null) {
+      // Si el usuario no presiona "Cancelar"
+      item.querySelector(".result").textContent = `Tu consumo es: ${ventana}`;
+    } else {
+      item.querySelector(".result").textContent =
+        "No se ingresó ningún mensaje.";
+    }
+    return 'result'
+  });
+});
+let calcularConsumo = function(ventana, mediaPrecios) {
+  return ventana * mediaPrecios;
+}
