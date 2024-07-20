@@ -47,7 +47,7 @@ function obtenerPrecioMaximo(datos) {
   const entradas = Object.entries(datos.data);
   let [horaMaxima, infoMaxima] = entradas[0];
   let precioMaximo = infoMaxima.price;
-
+  
   for (const [hora, info] of entradas) {
     if (info.price > precioMaximo) {
       precioMaximo = info.price;
@@ -118,9 +118,14 @@ async function main() {
   const { precio: precioMinimo, hora: horaMinima } = obtenerPrecioMinimo(datos);
   const mediaPrecios = obtenerMediaPrecios(datos);
   
+  //convertimos la cadena de texto en numeros con parseFloat para hacerlo accesible a los calculos del boton
+  let numeroMediaPrecios = parseFloat(mediaPrecios);
+
   console.log(`El precio máximo de la luz es ${precioMaximo}€ a las ${horaMaxima}.`);
   console.log(`El precio mínimo de la luz es ${precioMinimo}€ a las ${horaMinima}.`);
   console.log(`La media de los precios de la luz es ${mediaPrecios}€.`);
+
+  
 }
 
 main();
