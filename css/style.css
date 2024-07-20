@@ -52,6 +52,15 @@ p#intro {
   font-size: 2rem;
 }
 
+.hora{
+
+text-align: center;
+margin-top: 30%;
+font-weight: bold;
+font-size: 1rem;
+
+}
+
 #precios {
   padding: 15px;
   display: flex;
@@ -64,7 +73,7 @@ p#intro {
   font-size: 0.95rem;
   background-color: #ffffff;
   box-shadow: 0 2px 6px rgba(40, 125, 194, 0.318);
-  min-height: 5rem;
+  min-height: 12rem;
   border-radius: 1rem;
   padding: 0.75rem;
   margin: 2%;
@@ -96,7 +105,7 @@ li {
   list-style: none;
   padding: 3rem;
   min-height: 15rem;
-  min-width: 20rem;
+  min-width: 20rem;;
 }
 
 button {

@@ -121,6 +121,14 @@ async function main() {
   //convertimos la cadena de texto en numeros con parseFloat para hacerlo accesible a los calculos del boton
   let numeroMediaPrecios = parseFloat(mediaPrecios);
 
+  document.getElementById("horaMenor").textContent = (`${horaMinima}`)
+  document.getElementById("precioMenor").textContent = (`${precioMinimo} €/MWh`)
+
+  document.getElementById("precioMedio").textContent = (`${mediaPrecios} €/MWh`)
+
+  document.getElementById("horaMayor").textContent = (`${horaMaxima}.`)
+  document.getElementById("precioMayor").textContent = (`${precioMaximo} €/MWh`)
+
   console.log(`El precio máximo de la luz es ${precioMaximo}€ a las ${horaMaxima}.`);
   console.log(`El precio mínimo de la luz es ${precioMinimo}€ a las ${horaMinima}.`);
   console.log(`La media de los precios de la luz es ${mediaPrecios}€.`);
