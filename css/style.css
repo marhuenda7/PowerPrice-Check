@@ -19,10 +19,8 @@ header {
   box-shadow: 0 5px 5px 0 rgba(40, 125, 194, 0.315);
 }
 h1 > img {
-
   width: 2rem;
   height: 2rem;
-
 }
 
 h1 {
@@ -52,12 +50,14 @@ p#intro {
   font-size: 2rem;
 }
 
-.hora{
-
-text-align: center;
-margin-top: 30%;
-font-weight: bold;
-font-size: 1rem;
+.hora {
+  
+  text-align: center;
+  margin-top: 30%;
+  font-size: 1rem;   
+  min-height: 2rem;
+  margin: auto;
+  font-size: 1.5rem;
 
 }
 
@@ -74,6 +74,7 @@ font-size: 1rem;
   background-color: #ffffff;
   box-shadow: 0 2px 6px rgba(40, 125, 194, 0.318);
   min-height: 12rem;
+  min-width: 25%;
   border-radius: 1rem;
   padding: 0.75rem;
   margin: 2%;
@@ -105,7 +106,7 @@ li {
   list-style: none;
   padding: 3rem;
   min-height: 15rem;
-  min-width: 20rem;;
+  min-width: 20rem;
 }
 
 button {
@@ -129,7 +130,7 @@ footer {
   padding: 1rem;
   display: flex;
   justify-content: space-between;
-  font-size: .7rem;
+  font-size: 0.7rem;
 }
 
 @media screen and (min-width: 800px) {
@@ -160,8 +161,23 @@ footer {
   }
 
   article.card {
-    min-width: 30%;
+  
+    height: 15rem;
+    width: 1rem;
     margin: auto;
+  }
+
+  .hora{
+
+    min-height: 2rem;
+    margin: auto;
+    font-size: 1.5rem;
+
+  }
+  .numero{
+
+    margin: rem;
+    font-size: 2rem;
   }
 
   #graficaPrecios {
