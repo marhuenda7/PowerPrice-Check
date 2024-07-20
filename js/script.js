@@ -1,15 +1,19 @@
 "use strict";
 
-// Definición de los electrodomésticos y su consumo en vatios
-const electrodomesticos = {
-  ordenador: 100,
-  nevera: 150,
-  radiador: 1000,
-  cocina: 2000,
-  lavadora: 500,
-  // añade aquí más electrodomésticos si lo deseas
-};
+// Definición de los electrodomésticos y su consumo en vatios predeterminados en localStorage
 
+
+if (localStorage.getItem('electroStorage') === null){
+  let consumidores = {
+    ordenador: 100,
+    nevera: 150,
+    radiador: 1000,
+    cocina: 2000,
+    lavadora: 500,
+  };
+  localStorage.setItem('electroStorage', JSON.stringify(consumidores));
+} 
+const electrodomesticos = JSON.parse(localStorage.getItem('electroStorage'));
 // Función para obtener los datos de la API
 async function obtenerDatosAPI() {
   try {
@@ -132,7 +136,7 @@ async function main() {
   console.log(`El precio máximo de la luz es ${precioMaximo}€ a las ${horaMaxima}.`);
   console.log(`El precio mínimo de la luz es ${precioMinimo}€ a las ${horaMinima}.`);
   console.log(`La media de los precios de la luz es ${mediaPrecios}€.`);
-
+  
   
 }
 
