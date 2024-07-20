@@ -158,7 +158,7 @@ const activePrompt = Array.from(electricItems).forEach((item) => {
       }
       
       location.reload();
-      }
+      
       
   });
 });
