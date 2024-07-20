@@ -147,9 +147,11 @@ let electricItems = document.querySelectorAll("button");
 
 console.log(electricItems);
 console.log(JSON.parse(localStorage.getItem('electroStorage')))
+
 const activePrompt = Array.from(electricItems).forEach((item) => {
   item.addEventListener("click", () => {
     let ventana = parseInt(prompt(`Ingresa el consumo de tu ${[item.id]}`));
+    
     if (isNaN(ventana)) {
       alert(
         "Formato incorrecto. Por favor introduce solo la cantidad numérica"
@@ -159,8 +161,9 @@ const activePrompt = Array.from(electricItems).forEach((item) => {
       let electrodomesticos = JSON.parse(localStorage.getItem('electroStorage'));
       electrodomesticos[item.id] = ventana;
       localStorage.setItem('electroStorage', JSON.stringify(electrodomesticos));
-    } 
+      location.reload();
+      }
+      
   });
 });
-
 
