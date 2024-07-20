@@ -7,7 +7,7 @@ if (localStorage.getItem('electroStorage') === null){
   let consumidores = {
     ordenador: 100,
     nevera: 150,
-    radiador: 1000,
+    calefaccion: 1000,
     cocina: 2000,
     lavadora: 500,
   };
@@ -109,13 +109,14 @@ async function main() {
   console.log(horaActualStr);
   console.log(precioActual);
 
-  // Calculamos los costos
+  // Calculamos los costos y ponemos en HTML
   const costos = calcularCosto(electrodomesticos, precioActual);
+  document.getElementById("precioLavadora").textContent = (`${costos.lavadora} €/h`)
+  document.getElementById("precioOrdenador").textContent = (`${costos.ordenador} €/h`)
+  document.getElementById("precioHorno").textContent = (`${costos.cocina} €/h`)
+  document.getElementById("precioNevera").textContent = (`${costos.nevera} €/h`)
+  document.getElementById("precioCalefaccion").textContent = (`${costos.calefaccion} €/h`)
 
-  // Mostramos los costos
-  for (const [aparato, costo] of Object.entries(costos)) {
-    console.log(`El costo de funcionamiento de un ${aparato} durante una hora es de ${costo}€.`);
-  }
 
   // Calculamos y mostramos el precio máximo, mínimo y la media
   const { precio: precioMaximo, hora: horaMaxima } = obtenerPrecioMaximo(datos);
@@ -137,14 +138,15 @@ async function main() {
   console.log(`El precio mínimo de la luz es ${precioMinimo}€ a las ${horaMinima}.`);
   console.log(`La media de los precios de la luz es ${mediaPrecios}€.`);
   
-  
+
 }
 
 main();
 
 let electricItems = document.querySelectorAll("button");
-console.log(electricItems);
 
+console.log(electricItems);
+console.log(JSON.parse(localStorage.getItem('electroStorage')))
 const activePrompt = Array.from(electricItems).forEach((item) => {
   item.addEventListener("click", () => {
     let ventana = parseInt(prompt(`Ingresa el consumo de tu ${[item.id]}`));
@@ -152,16 +154,13 @@ const activePrompt = Array.from(electricItems).forEach((item) => {
       alert(
         "Formato incorrecto. Por favor introduce solo la cantidad numérica"
       );
-    } else if (ventana !== null) {
-      // Si el usuario no presiona "Cancelar"
-      item.querySelector(".result").textContent = `Tu consumo es: ${ventana}`;
     } else {
-      item.querySelector(".result").textContent =
-        "No se ingresó ningún mensaje.";
-    }
-    return 'result'
+           // Aquí modificamos el valor en el localStorage
+      let electrodomesticos = JSON.parse(localStorage.getItem('electroStorage'));
+      electrodomesticos[item.id] = ventana;
+      localStorage.setItem('electroStorage', JSON.stringify(electrodomesticos));
+    } 
   });
 });
-let calcularConsumo = function(ventana, mediaPrecios) {
-  return ventana * mediaPrecios;
-}
+
+
