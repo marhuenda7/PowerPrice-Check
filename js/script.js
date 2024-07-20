@@ -109,8 +109,16 @@ async function main() {
   console.log(horaActualStr);
   console.log(precioActual);
 
-  // Calculamos los costos
-  const costos = calcularCosto(electrodomesticos, precioActual);
+    // Calculamos los costos
+    const costos = calcularCosto(electrodomesticos, precioActual);
+ 
+    // Mostramos el precio por hora de cada electrodomestico
+    document.getElementById("precioLavadora").textContent = (`${costos.lavadora}`);
+    document.getElementById("precioCalefaccion").textContent = (`${costos.radiador}`);
+    document.getElementById("precioOrdenador").textContent = (`${costos.ordenador}`);
+    document.getElementById("precioLavadora").textContent = (`${costos.lavadora}`);
+    document.getElementById("precioHorno").textContent = (`${costos.cocina}`);
+    document.getElementById("precioNevera").textContent = (`${costos.nevera}`);
 
   // Mostramos los costos
   for (const [aparato, costo] of Object.entries(costos)) {
