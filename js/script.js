@@ -142,7 +142,7 @@ let electricItems = document.querySelectorAll("button");
 
 const activePrompt = Array.from(electricItems).forEach((item) => {
   item.addEventListener("click", () => {
-    let ventana = parseInt(prompt(`Ingresa el consumo de tu ${[item.id]}`));
+    let ventana = parseInt(prompt(`Ingresa el consumo de tu ${[item.id]} en W`));
     
     
     if (isNaN(ventana)) {
