@@ -154,7 +154,6 @@ const activePrompt = Array.from(electricItems).forEach((item) => {
       let electrodomesticos = JSON.parse(localStorage.getItem('electroStorage'));
       electrodomesticos[item.id] = ventana;
       localStorage.setItem('electroStorage', JSON.stringify(electrodomesticos));
-      location.reload();
       }
       
       location.reload();
