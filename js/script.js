@@ -152,7 +152,7 @@ const activePrompt = Array.from(electricItems).forEach((item) => {
   item.addEventListener("click", () => {
     let ventana = parseInt(prompt(`Ingresa el consumo de tu ${[item.id]}`));
     
-    if (isNaN(ventana)) {
+    if (isNaN(ventana) || ventana < 0) {
       alert(
         "Formato incorrecto. Por favor introduce solo la cantidad numérica"
       );
