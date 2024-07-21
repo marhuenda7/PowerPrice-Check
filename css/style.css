@@ -80,6 +80,13 @@ p#intro {
   margin: 2%;
 }
 
+#tabla{
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+  margin: auto;
+}
+
 .numero {
   font-weight: bold;
   text-align: center;
