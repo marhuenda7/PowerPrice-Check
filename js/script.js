@@ -167,8 +167,10 @@ const activePrompt = Array.from(electricItems).forEach((item) => {
   item.addEventListener("click", () => {
     let ventana = parseInt(prompt(`Ingresa el consumo de tu ${[item.id]} en W`));
     
-    
-    if (isNaN(ventana) || ventana < 0) {
+    if(ventana < 0){
+      alert('El número ingresado debe de ser positivo')
+    }
+    if (isNaN(ventana)) {
       alert(
         "Formato incorrecto. Por favor introduce solo la cantidad numérica"
       );
@@ -179,7 +181,7 @@ const activePrompt = Array.from(electricItems).forEach((item) => {
       localStorage.setItem('electroStorage', JSON.stringify(electrodomesticos));
       location.reload();
       }
-         
+      location.reload();   
   });
 });
 
