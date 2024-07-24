@@ -20,43 +20,22 @@ async function obtenerDatosAPI() {
     const respuesta = await fetch(
       "https://bypass-cors-beta.vercel.app/?url=https://api.preciodelaluz.org/v1/prices/all?zone=PCB"
     );
-    if (!respuesta.ok) {
-      throw new Error(`HTTP error! status: ${respuesta.status}`);
-    }
     const datos = await respuesta.json();
-    console.log('Datos obtenidos de la API:', datos);
-    guardarDatosLocalStorage(datos.data);
-    mostrarPreciosPorHora(datos.data);
-    return datos.data;
+    guardarDatosLocalStorage(datos);
+    
+    return datos;
   } catch (err) {
-    console.error('Error al obtener datos de la API:', err.message);
+    console.error(err.message);
   }
 }
-//Función para sacar los datos de precio por cada hora
-function mostrarPreciosPorHora(datos) {
-  console.log('Mostrando precios por hora:', datos);
-  Object.entries(datos).forEach(([hora, detalle]) => {
-    if (detalle && typeof detalle === 'object') {
-      console.log(`Hora: ${hora}, Precio: ${detalle.price}`);
-    } else {
-      console.error('Detalle inválido para hora:', hora, detalle);
-    }
-  });
-}
+
 // Función para guardar los datos en el LocalStorage
 function guardarDatosLocalStorage(datos) {
   const fecha = new Date().toISOString().split('T')[0]; // obtenemos la fecha actual
   localStorage.setItem('datosPrecioLuz', JSON.stringify(datos));
   localStorage.setItem('fechaDatos', fecha);
 }
-// Obtener datos almacenados en el LocalStorage y mostrar precios si existen
-let precioPorHora = JSON.parse(localStorage.getItem('datosPrecioLuz'));
-if (precioPorHora) {
-  console.log('Datos obtenidos del LocalStorage:', precioPorHora);
-  mostrarPreciosPorHora(precioPorHora);
-} else {
-  console.log('No hay datos en el LocalStorage');
-}
+
 // Función para calcular el costo de funcionamiento de los electrodomésticos
 function calcularCosto(electrodomesticos, precio) {
   const costos = {};
@@ -153,8 +132,6 @@ async function main() {
   document.getElementById("horaMayor").textContent = (`${horaMaxima}h`)
   document.getElementById("precioMayor").textContent = (`${precioMaximo} €/MWh`)
 
-  let tabla = document.getElementsById("tabla");
-  tabla.textContent = (`Hora: ${hora}, Precio: ${detalle.price}€`)
  
 }
 
@@ -167,9 +144,7 @@ const activePrompt = Array.from(electricItems).forEach((item) => {
   item.addEventListener("click", () => {
     let ventana = parseInt(prompt(`Ingresa el consumo de tu ${[item.id]} en W`));
     
-    if(ventana < 0){
-      alert('El número ingresado debe de ser positivo')
-    }
+    
     if (isNaN(ventana)) {
       alert(
         "Formato incorrecto. Por favor introduce solo la cantidad numérica"
@@ -181,7 +156,10 @@ const activePrompt = Array.from(electricItems).forEach((item) => {
       localStorage.setItem('electroStorage', JSON.stringify(electrodomesticos));
       location.reload();
       }
-      location.reload();   
+      
+      location.reload();
+      
+      
   });
 });
 
