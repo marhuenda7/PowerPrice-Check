@@ -51,14 +51,7 @@ function guardarDatosLocalStorage(datos) {
   localStorage.setItem('datosPrecioLuz', JSON.stringify(datos));
   localStorage.setItem('fechaDatos', fecha);
 }
-// Obtener datos almacenados en el LocalStorage y mostrar precios si existen
-let precioPorHora = JSON.parse(localStorage.getItem('datosPrecioLuz'));
-if (precioPorHora) {
-  console.log('Datos obtenidos del LocalStorage:', precioPorHora);
-  mostrarPreciosPorHora(precioPorHora);
-} else {
-  console.log('No hay datos en el LocalStorage');
-}
+
 // Función para calcular el costo de funcionamiento de los electrodomésticos
 function calcularCosto(electrodomesticos, precio) {
   const costos = {};
@@ -167,8 +160,8 @@ const activePrompt = Array.from(electricItems).forEach((item) => {
     let ventana = parseInt(prompt(`Ingresa el consumo de tu ${[item.id]} en W`));
     
     if(ventana < 0){
-      alert('El número ingresado debe de ser positivo')
-    }
+      alert('El número insertado debe ser positivo');
+      }
     if (isNaN(ventana)) {
       alert(
         "Formato incorrecto. Por favor introduce solo la cantidad numérica"
@@ -180,7 +173,10 @@ const activePrompt = Array.from(electricItems).forEach((item) => {
       localStorage.setItem('electroStorage', JSON.stringify(electrodomesticos));
       location.reload();
       }
-      location.reload();   
+      
+      location.reload();
+      
+      
   });
 });
 
