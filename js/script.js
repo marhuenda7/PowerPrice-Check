@@ -30,7 +30,8 @@ async function obtenerDatosAPI() {
     return datos.data;
   } catch (err) {
     console.error('Error al obtener datos de la API:', err.message);
-  }
+    return null;
+  } 
 }
 //Función para sacar los datos de precio por cada hora
 function mostrarPreciosPorHora(datos) {
@@ -43,6 +44,7 @@ function mostrarPreciosPorHora(datos) {
     }
   });
 }
+
 // Función para guardar los datos en el LocalStorage
 function guardarDatosLocalStorage(datos) {
   const fecha = new Date().toISOString().split('T')[0]; // obtenemos la fecha actual
@@ -69,7 +71,8 @@ function calcularCosto(electrodomesticos, precio) {
 
 // Función para calcular el precio máximo y la hora correspondiente
 function obtenerPrecioMaximo(datos) {
-  const entradas = Object.entries(datos.data);
+  if (!datos) return { precio: null, hora: null };
+  const entradas = Object.entries(datos);
   let [horaMaxima, infoMaxima] = entradas[0];
   let precioMaximo = infoMaxima.price;
   
@@ -84,7 +87,8 @@ function obtenerPrecioMaximo(datos) {
 
 // Función para calcular el precio mínimo y la hora correspondiente
 function obtenerPrecioMinimo(datos) {
-  const entradas = Object.entries(datos.data);
+  if (!datos) return { precio: null, hora: null };
+  const entradas = Object.entries(datos);
   let [horaMinima, infoMinima] = entradas[0];
   let precioMinimo = infoMinima.price;
 
@@ -99,7 +103,8 @@ function obtenerPrecioMinimo(datos) {
 
 // Función para calcular la media de los precios
 function obtenerMediaPrecios(datos) {
-  const precios = Object.values(datos.data).map(entry => entry.price);
+  if (!datos) return { precio: null, hora: null };
+  const precios = Object.values(datos).map(entry => entry.price);
   const suma = precios.reduce((total, precio) => total + precio, 0);
   return (suma / precios.length).toFixed(2);
 }
@@ -107,43 +112,35 @@ function obtenerMediaPrecios(datos) {
 // Función principal
 async function main() {
   let datos = JSON.parse(localStorage.getItem("datosPrecioLuz"));
-  if (!datos) {
-    datos = await obtenerDatosAPI();
-    
-  } else {
-    const fechaActual = new Date().toISOString().split("T")[0];
-    const fechaDatos = localStorage.getItem("fechaDatos");
-   
-    if (fechaDatos === fechaActual) {
-      datos = JSON.parse(localStorage.getItem("datosPrecioLuz"));
-     
-    } else {
-      datos = obtenerDatosAPI();
-     
-    }
+  const fechaActual = new Date().toISOString().split("T")[0];
+  const fechaDatos = localStorage.getItem("fechaDatos");
+  if (!datos || fechaDatos !== fechaActual) {
+    datos = await obtenerDatosAPI();  
   }
-  
   // Obtenemos el precio actual
-  const horaActual = new Date().getHours();
-  const horaActualStr = horaActual.toString().padStart(2, '0') + '-' + (horaActual + 1).toString().padStart(2, '0');
-  const precioActual = datos.data[horaActualStr].price;
-
-  // Calculamos los costos y ponemos en HTML
-  const costos = calcularCosto(electrodomesticos, precioActual);
-  document.getElementById("precioLavadora").textContent = (`${costos.lavadora} €/h`)
-  document.getElementById("precioOrdenador").textContent = (`${costos.ordenador} €/h`)
-  document.getElementById("precioHorno").textContent = (`${costos.cocina} €/h`)
-  document.getElementById("precioNevera").textContent = (`${costos.nevera} €/h`)
-  document.getElementById("precioCalefaccion").textContent = (`${costos.calefaccion} €/h`)
-
-
-  // Calculamos y mostramos el precio máximo, mínimo y la media
+  if(datos){
+    const horaActual = new Date().getHours();
+    const horaActualStr = horaActual.toString().padStart(2, '0') + '-' + (horaActual + 1).toString().padStart(2, '0');
+    const precioActual = datos[horaActualStr]?.price;
+    if (precioActual !== undefined) {
+      console.log(`El precio actual para la franja horaria ${horaActualStr} es: ${precioActual}`);
+      // Calculamos los costos y ponemos en HTML
+      const costos = calcularCosto(electrodomesticos, precioActual);
+      document.getElementById("precioLavadora").textContent = (`${costos.lavadora} €/h`)
+      document.getElementById("precioOrdenador").textContent = (`${costos.ordenador} €/h`)
+      document.getElementById("precioHorno").textContent = (`${costos.cocina} €/h`)
+      document.getElementById("precioNevera").textContent = (`${costos.nevera} €/h`)
+      document.getElementById("precioCalefaccion").textContent = (`${costos.calefaccion} €/h`) 
+    }else {
+      console.log(`No se encontró el precio para la franja horaria ${horaActualStr}`); 
+    }
+   // Calculamos y mostramos el precio máximo, mínimo y la media
   const { precio: precioMaximo, hora: horaMaxima } = obtenerPrecioMaximo(datos);
   const { precio: precioMinimo, hora: horaMinima } = obtenerPrecioMinimo(datos);
   const mediaPrecios = obtenerMediaPrecios(datos);
-  
+    
   //convertimos la cadena de texto en numeros con parseFloat para hacerlo accesible a los calculos del boton
-  let numeroMediaPrecios = parseFloat(mediaPrecios);
+  // let numeroMediaPrecios = parseFloat(mediaPrecios);
 
   document.getElementById("horaMenor").textContent = (`${horaMinima}h`)
   document.getElementById("precioMenor").textContent = (`${precioMinimo} €/MWh`)
@@ -152,12 +149,14 @@ async function main() {
 
   document.getElementById("horaMayor").textContent = (`${horaMaxima}h`)
   document.getElementById("precioMayor").textContent = (`${precioMaximo} €/MWh`)
-
-  let tabla = document.getElementsById("tabla");
-  tabla.textContent = (`Hora: ${hora}, Precio: ${detalle.price}€`)
+//Mostramos los precios por cada hora en la tabla
+  const tabla = document.getElementById("tabla");
  
+} else {
+  //datos = obtenerDatosAPI();
+ console.error('No se pudieron obtener os datos.');
 }
-
+}
 main();
 
 let electricItems = document.querySelectorAll("button");
