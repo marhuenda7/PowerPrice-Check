@@ -53,53 +53,58 @@ function guardarDatosLocalStorage(datos) {
 }
 
 // Función para calcular el costo de funcionamiento de los electrodomésticos
-function calcularCosto(electrodomesticos, precio) {
+function calcularCosto(electrodomesticos, precioMwh) {
   const costos = {};
+  const precioKwh = precioMwh / 1000;
   for (const [aparato, vatios] of Object.entries(electrodomesticos)) {
-    const costo = (vatios / 1000) * precio; // convertimos vatios a kilovatios y multiplicamos por el precio
-    costos[aparato] = costo.toFixed(2); // guardamos el costo con dos decimales
+    const costoKwh = (vatios / 1000) * precioKwh; // convertimos vatios a kilovatios y multiplicamos por el precio
+    costos[aparato] = costoKwh.toFixed(3); // guardamos el costo con dos decimales
   }
   return costos;
 }
 
 // Función para calcular el precio máximo y la hora correspondiente
 function obtenerPrecioMaximo(datos) {
-  if (!datos) return { precio: null, hora: null };
+  if (!datos) return { precioMwh: null, precioKwh: null, hora: null };
   const entradas = Object.entries(datos);
   let [horaMaxima, infoMaxima] = entradas[0];
-  let precioMaximo = infoMaxima.price;
+  let precioMaximoMwh = infoMaxima.price;
   
   for (const [hora, info] of entradas) {
-    if (info.price > precioMaximo) {
-      precioMaximo = info.price;
+    if (info.price > precioMaximoMwh) {
+      precioMaximoMwh = info.price;
       horaMaxima = hora;
     }
   }
-  return { precio: precioMaximo, hora: horaMaxima };
+  const precioMaximoKwh = (precioMaximoMwh / 1000).toFixed(3);
+  return { precioMwh: precioMaximoMwh, precioKwh: precioMaximoKwh, hora: horaMaxima };
 }
 
 // Función para calcular el precio mínimo y la hora correspondiente
 function obtenerPrecioMinimo(datos) {
-  if (!datos) return { precio: null, hora: null };
+  if (!datos) return { precioMwh: null, precioKwh: null, hora: null };
   const entradas = Object.entries(datos);
   let [horaMinima, infoMinima] = entradas[0];
-  let precioMinimo = infoMinima.price;
+  let precioMinimoMwh = infoMinima.price;
 
   for (const [hora, info] of entradas) {
-    if (info.price < precioMinimo) {
-      precioMinimo = info.price;
+    if (info.price < precioMinimoMwh) {
+      precioMinimoMwh = info.price;
       horaMinima = hora;
     }
   }
-  return { precio: precioMinimo, hora: horaMinima };
+  const precioMinimoKwh = (precioMinimoMwh / 1000).toFixed(3)
+  return { precioMwh: precioMinimoMwh, precioKwh: precioMinimoKwh, hora: horaMinima };
 }
 
 // Función para calcular la media de los precios
 function obtenerMediaPrecios(datos) {
-  if (!datos) return { precio: null, hora: null };
-  const precios = Object.values(datos).map(entry => entry.price);
-  const suma = precios.reduce((total, precio) => total + precio, 0);
-  return (suma / precios.length).toFixed(2);
+  if (!datos) return { precioMwh: null, precioKwh: null };
+  const preciosMwh = Object.values(datos).map(entry => entry.price);
+  const sumaMwh = preciosMwh.reduce((total, precio) => total + precio, 0);
+  const mediaMwh = (sumaMwh / preciosMwh.length).toFixed(3);
+  const mediaKwh = (mediaMwh / 1000).toFixed(3);
+  return {precioMwh: mediaMwh, precioKwh: mediaKwh };
 }
 
 // Función principal
@@ -128,20 +133,20 @@ async function main() {
       console.log(`No se encontró el precio para la franja horaria ${horaActualStr}`); 
     }
    // Calculamos y mostramos el precio máximo, mínimo y la media
-  const { precio: precioMaximo, hora: horaMaxima } = obtenerPrecioMaximo(datos);
-  const { precio: precioMinimo, hora: horaMinima } = obtenerPrecioMinimo(datos);
-  const mediaPrecios = obtenerMediaPrecios(datos);
+  const { precioMwh: precioMaximoMwh, precioKwh: precioMaximoKwh, hora: horaMaxima } = obtenerPrecioMaximo(datos);
+  const { precioMwh: precioMinimoMwh, precioKwh: precioMinimoKwh, hora: horaMinima } = obtenerPrecioMinimo(datos);
+  const {precioMwh: mediaMwh, precioKwh: mediaKwh } = obtenerMediaPrecios(datos);
     
   //convertimos la cadena de texto en numeros con parseFloat para hacerlo accesible a los calculos del boton
   // let numeroMediaPrecios = parseFloat(mediaPrecios);
 
   document.getElementById("horaMenor").textContent = (`${horaMinima}h`)
-  document.getElementById("precioMenor").textContent = (`${precioMinimo} €/MWh`)
+  document.getElementById("precioMenor").textContent = (`${precioMinimoMwh} €/MWh (${precioMinimoKwh} €/kWk)`)
 
-  document.getElementById("precioMedio").textContent = (`${mediaPrecios} €/MWh`)
+  document.getElementById("precioMedio").textContent = (`${mediaMwh} €/MWh (${mediaKwh} €/kWh)`)
 
   document.getElementById("horaMayor").textContent = (`${horaMaxima}h`)
-  document.getElementById("precioMayor").textContent = (`${precioMaximo} €/MWh`)
+  document.getElementById("precioMayor").textContent = (`${precioMaximoMwh} €/MWh (${precioMaximoKwh} €/kWh)`)
 //Mostramos los precios por cada hora en la tabla
   const tabla = document.getElementById("tabla");
  
