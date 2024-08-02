@@ -34,7 +34,7 @@ async function obtenerDatosAPI() {
   } 
 }
 //Función para sacar los datos de precio por cada hora
-function mostrarPreciosPorHora(datos) {
+/*function mostrarPreciosPorHora(datos) {
   console.log('Mostrando precios por hora:', datos);
   Object.entries(datos).forEach(([hora, detalle]) => {
     if (detalle && typeof detalle === 'object') {
@@ -43,13 +43,74 @@ function mostrarPreciosPorHora(datos) {
       console.error('Detalle inválido para hora:', hora, detalle);
     }
   });
-}
+}*/
 
 // Función para guardar los datos en el LocalStorage
 function guardarDatosLocalStorage(datos) {
   const fecha = new Date().toISOString().split('T')[0]; // obtenemos la fecha actual
   localStorage.setItem('datosPrecioLuz', JSON.stringify(datos));
   localStorage.setItem('fechaDatos', fecha);
+}
+
+// Obtener datos almacenados en el LocalStorage y mostrar precios si existen
+let precioPorHora = JSON.parse(localStorage.getItem("datosPrecioLuz"));
+if (precioPorHora) {
+  console.log("Datos obtenidos del LocalStorage:", precioPorHora);
+  mostrarPreciosPorHora(precioPorHora);
+} else {
+  console.log("No hay datos en el LocalStorage");
+}
+
+function getIcon(datos, price) {
+  const min = obtenerPrecioMinimo(datos).precioKwh * 1000;
+  const max = obtenerPrecioMaximo(datos).precioKwh * 1000;
+  const section = (max - min) / 3;
+  const logoVerde = document.createElement('img');
+  logoVerde.src = './img/green.png';
+  logoVerde.alt = 'Bombilla verde';
+  logoVerde.className = 'bombilla';
+  const logoAmarillo = document.createElement('img');
+  logoAmarillo.src = './img/yellow.png';
+  logoAmarillo.alt = 'Bombilla amarilla';
+  logoAmarillo.className = 'bombilla';
+  const logoRojo = document.createElement('img');
+  logoRojo.src = './img/red.png';
+  logoRojo.alt = 'Bombilla roja';
+  logoRojo.className = 'bombilla'
+
+  
+  if (price < min + section) {
+    return logoVerde;
+  } else if (price < min + section * 2) {
+    return logoAmarillo;
+  } else  {
+    return logoRojo;
+  }
+}
+// Función para obtener los precios y armar la tabla
+function mostrarPreciosPorHora(datos) {
+  const tabla = document
+    .getElementById("tabla")
+    .getElementsByTagName("tbody")[0];
+  Object.entries(datos).forEach(([hora, detalle]) => {
+    const fila = document.createElement("tr");
+    const celdaHora = document.createElement("td");
+    const celdaPrecioMwh = document.createElement("td");
+    const celdaPrecioKwh = document.createElement("td");
+    const celdaIcono = document.createElement("td");
+
+    celdaHora.textContent = hora;
+    celdaPrecioMwh.textContent = `${detalle.price} €/MWh`;
+    celdaPrecioKwh.textContent = `${(detalle.price / 1000).toFixed(4)} €/kWh`;
+    
+    const icono = getIcon(datos, detalle.price);
+    celdaIcono.appendChild(icono);
+    fila.appendChild(celdaHora);
+    fila.appendChild(celdaPrecioMwh);
+    fila.appendChild(celdaPrecioKwh);
+    fila.appendChild(celdaIcono);
+    tabla.appendChild(fila);
+  });
 }
 
 // Función para calcular el costo de funcionamiento de los electrodomésticos
@@ -154,34 +215,52 @@ async function main() {
   //datos = obtenerDatosAPI();
  console.error('No se pudieron obtener os datos.');
 }
+
+//Función para marcar en pantalla el consumo del usuario y
+const marcarEnPantalla = document.getElementById("pantalla");
+  marcarEnPantalla.addEventListener("keydown", (e) => {
+    if (marcarEnPantalla.textContent.length >= 4) {
+      e.preventDefault();
+    }
+  });
+  const digits = document.querySelectorAll(".cDigit");
+  for (const digit of digits) {
+    digit.addEventListener("click", (e) => {
+      if (marcarEnPantalla.textContent.length >= 4) {
+        return false;
+      }
+      marcarEnPantalla.textContent =
+        marcarEnPantalla.textContent + e.target.textContent;
+    });
+  }
+  const btnC = document.getElementById("cB");
+  btnC.addEventListener("click", function () {
+    let datoIngresado = marcarEnPantalla.textContent;
+    if (datoIngresado.length > 0) {
+      marcarEnPantalla.textContent = datoIngresado.slice(0, -1);
+    }
+  });
+  const btnReset = document.getElementById("clearB");
+  btnReset.addEventListener("click", function () {
+    marcarEnPantalla.textContent = "";
+  });
+  const btnIgual = document.getElementById("resultB");
+  btnIgual.addEventListener("click", function () {
+    const vatios = parseInt(marcarEnPantalla.textContent, 10);
+    if (!isNaN(vatios)) {
+      const horaActual = new Date().getHours();
+      const horaActualStr =
+        horaActual.toString().padStart(2, "0") +
+        "-" +
+        (horaActual + 1).toString().padStart(2, "0");
+      const precioActual = datos[horaActualStr]?.price;
+      const precioKwh = precioActual / 1000;
+      const costo = ((vatios / 1000) * precioKwh).toFixed(2);
+      marcarEnPantalla.textContent = `${costo} €/h`;
+    } else {
+      marcarEnPantalla.textContent = "Error";
+    }
+  });
 }
 main();
-
-let electricItems = document.querySelectorAll("button");
-
-
-const activePrompt = Array.from(electricItems).forEach((item) => {
-  item.addEventListener("click", () => {
-    let ventana = parseInt(prompt(`Ingresa el consumo de tu ${[item.id]} en W`));
-    
-    if(ventana < 0){
-      alert('El número insertado debe ser positivo');
-      }
-    if (isNaN(ventana)) {
-      alert(
-        "Formato incorrecto. Por favor introduce solo la cantidad numérica"
-      );
-    } else {
-           // Aquí modificamos el valor en el localStorage
-      let electrodomesticos = JSON.parse(localStorage.getItem('electroStorage'));
-      electrodomesticos[item.id] = ventana;
-      localStorage.setItem('electroStorage', JSON.stringify(electrodomesticos));
-      location.reload();
-      }
-      
-      location.reload();
-      
-      
-  });
-});
 

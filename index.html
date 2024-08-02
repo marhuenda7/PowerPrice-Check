@@ -65,12 +65,54 @@
 
     <section id="graficaPrecios" class="card">
       <h2>
-        Grafica/tabla precios
+        Tabla de precios
         <hr />
       </h2>
 
       <article id="grafica">
-      
+        <table id="tabla" class="card">
+          <th colspan="2"><h3>Precios de la luz por horas</h3></th>
+          <hr />
+          <tr>
+            <th>HORAS</th>
+            <th>PRECIO (€/MWh)</th>
+            <th>PRECIO (€/kWh)</th>
+          </tr>
+          <tbody></tbody>
+        </table>
+      </article>
+    </section>
+    <section id="calculadora">
+      <h2 id="leyenda">
+        Teclea o pulsa el consumo de tu electrodoméstico en la calculadora y
+        presiona "=" para ver el resultado.
+      </h2>
+      <button id="cerrarB">⬅ Atrás</button>
+      <div id="container">
+        <div id="pantalla" contenteditable="true"></div>
+        <button id="clearB" class="cButton">AC</button>
+        <button id="cB" class="cButton">C</button>
+        <button class="cButton">%</button>
+        <button class="cButton">✓</button>
+        <button id="button7" class="cButton cDigit">7</button>
+        <button id="button8" class="cButton cDigit">8</button>
+        <button id="button9" class="cButton cDigit">9</button>
+        <button class="cButton">÷</button>
+        <button id="button4" class="cButton cDigit">4</button>
+        <button id="button5" class="cButton cDigit">5</button>
+        <button id="button6" class="cButton cDigit">6</button>
+        <button class="cButton">x</button>
+        <button id="button1" class="cButton cDigit">1</button>
+        <button id="button2" class="cButton cDigit">2</button>
+        <button id="button3" class="cButton cDigit">3</button>
+        <button class="cButton">-</button>
+        <button id="button0" class="cButton cDigit">0</button>
+        <button class="cButton">·</button>
+        <button id="resultB" class="cButton">=</button>
+        <button class="cButton">+</button>
+      </div>
+    </section>
+
         
 
 
@@ -78,47 +120,48 @@
     </section>
 
     <section id="listaEjemplos" class="card">
-      <h2>Consulta tu consumo clickando en los siguientes electrodomesticos</h2>
+      <h2>Ejemplos de consumo por hora de algunos electrodomésticos</h2>
       <hr>
       <br />
       <ul>
         <li>
           <p>Lavadora</p>
-          <button id="lavadora">
+          <button id="lavadora" class="eButton">
             <img src="./img/lavadora.jpg" alt="lavadora" class="ejemplos" /><p id="precioLavadora"><span class="result"></span></p>
           </button>
           
             </li>
             <li>
               <p>Calefaccion</p>
-              <button id="calefaccion">
+              <button id="calefaccion" class="eButton">
                 <img src="./img/radiador.jpg" alt="calefaccion" class="ejemplos" /><p id="precioCalefaccion"><span class="result"></span></p>
               </button>
               
             </li>
             <li>
               <p>Ordenador</p>
-              <button id="ordenador">
+              <button id="ordenador" class="eButton">
                 <img src="./img/pc.jpg" alt="ordenador" class="ejemplos" /><p id="precioOrdenador"><span class="result"></span></p>
               </button>
               
             </li>
             <li>
               <p>Cocina electrica</p>
-              <button id="cocina">
+              <button id="cocina" class="eButton">
                 <img src="./img/horno.jpg" alt="Horno" class="ejemplos" /><p id="precioHorno"><span class="result"></span></p>
               </button>
               
             </li>
             <li>
               <p>Nevera</p>
-              <button id="nevera">
+              <button id="nevera" class="eButton">
                 <img src="./img/nevera.jpg" alt="Nevera" class="ejemplos" /><p id="precioNevera"><span class="result"></span></p>
               </button>
               
         </li>
       
       </ul>
+      <h3>Consulta tu consumo clickando en las fotos</h3>
     </section>
 
     <footer>
