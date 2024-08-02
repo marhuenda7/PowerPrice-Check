@@ -33,17 +33,6 @@ async function obtenerDatosAPI() {
     return null;
   } 
 }
-//Función para sacar los datos de precio por cada hora
-/*function mostrarPreciosPorHora(datos) {
-  console.log('Mostrando precios por hora:', datos);
-  Object.entries(datos).forEach(([hora, detalle]) => {
-    if (detalle && typeof detalle === 'object') {
-      console.log(`Hora: ${hora}, Precio: ${detalle.price}`);
-    } else {
-      console.error('Detalle inválido para hora:', hora, detalle);
-    }
-  });
-}*/
 
 // Función para guardar los datos en el LocalStorage
 function guardarDatosLocalStorage(datos) {
@@ -264,3 +253,20 @@ const marcarEnPantalla = document.getElementById("pantalla");
 }
 main();
 
+//Función para abrir y cerra la calculadora
+const calculadora = document.getElementById("calculadora");
+const btnAbrirCalculadora = document.querySelectorAll(".ejemplos");
+const cerrarCalculadora = document.getElementById("cerrarB");
+for (const buttonCalc of btnAbrirCalculadora) {
+  buttonCalc.addEventListener("click", () => {
+    calculadora.style.display = "block";
+  });
+}
+cerrarCalculadora.addEventListener("click", () => {
+  calculadora.style.display = "none";
+});
+window.addEventListener("click", (event) => {
+  if (event.target === calculadora) {
+    calculadora.style.display = "none";
+  }
+});
