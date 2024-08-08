@@ -93,8 +93,7 @@ p#intro {
 }
 
 #calculadora{
-  background-color: rgb(231, 211, 184);
-  display: none;
+  background-color:  #79a8b9;
   border-radius: 1rem;
   height: 100%;
   width: 100%;
@@ -102,6 +101,7 @@ p#intro {
   justify-content: center;
   flex-direction: column;
   box-shadow: 0 2px 6px rgba(40, 125, 194, 0.318);
+  display: none;
 }
 
 #leyenda{
@@ -113,7 +113,7 @@ p#intro {
   margin-left: 20px;
   margin-top: 30px;
   padding: 10px;
-  background-color: blanchedalmond;
+  background-color: #aed1e3;
   font-size: medium;
   font-weight: bold;
   border-style: none;
